@@ -19,6 +19,12 @@ public class Luggage {
     public Luggage() {
     }
 
+    public Luggage(String name, long phoneNumber, String status) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+    }
+
     public Luggage(String name, long phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;

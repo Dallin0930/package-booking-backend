@@ -7,6 +7,7 @@ import com.oocl.packagebooking.repository.LuggageStorerepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
@@ -17,6 +18,7 @@ public class LuggageService {
     @Autowired
     LuggageStorerepository luggageStorerepository;
 
+    @Transactional
     public Luggage addOrder(long id, Luggage luggage) {
         LuggageStroe luggageStroe=luggageStorerepository.findById(id).orElse(null);
         luggage.setLuggageStroe(luggageStroe);
@@ -24,5 +26,14 @@ public class LuggageService {
         luggage.setStatus("No Picked");
         return luggageRepository.save(luggage);
     }
+
+    @Transactional
+    public Luggage updateStatus(Long id) {
+        Luggage luggage=luggageRepository.findById(id).orElse(null);
+        luggage.setStatus("picked");
+        LuggageStroe luggageStroe= luggage.getLuggageStroe();
+        return luggageRepository.save(luggage);
+    }
 }
+
 

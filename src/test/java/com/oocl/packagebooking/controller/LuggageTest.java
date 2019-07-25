@@ -28,6 +28,8 @@ public class LuggageTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+
     @Test
     public void should_return_luggageOrder_when_add_luggage_to_store() throws  Exception{
         Luggage luggage1= new Luggage("yae",1524521251);
@@ -49,5 +51,22 @@ public class LuggageTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void should_return_changed_luggage_when_luggage_status_is_changed() throws Exception{
+        Luggage luggage= new Luggage("cat",1845865596,"no pick");
+        luggage.setOrderId((long) 1);
+
+        LuggageStroe luggageStroe= new LuggageStroe("storeA");
+        luggageStroe.setStoreId((long) 2);
+
+        given(luggageService.updateStatus((long) 1))
+                .willReturn(luggage);
+
+        mockMvc.perform(post("/orders/1")
+               .contentType(MediaType.APPLICATION_JSON_UTF8))
+               .andExpect(content().string(objectMapper.writeValueAsString(luggage)));
+
     }
 }
