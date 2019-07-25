@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class LuggageService {
@@ -33,6 +34,14 @@ public class LuggageService {
         luggage.setStatus("picked");
         LuggageStroe luggageStroe= luggage.getLuggageStroe();
         return luggageRepository.save(luggage);
+    }
+
+    public List<Luggage> getAllPackages() {
+        return luggageRepository.findAll();
+    }
+
+    public List<Luggage> getPackagesByStatus(String status) {
+        return luggageRepository.findPackagesByStatus(status);
     }
 }
 

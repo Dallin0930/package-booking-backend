@@ -6,6 +6,8 @@ import com.oocl.packagebooking.service.LuggageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class LuggageController {
     @Autowired
@@ -13,6 +15,16 @@ public class LuggageController {
 
     @Autowired
     LuggageRepository luggageRepository;
+
+
+    @GetMapping("/packages")
+    public List<Luggage> getAllPackages(@RequestParam(defaultValue = "") String status) {
+        if(status.equals("")) {
+            return luggageService.getAllPackages();
+        } else {
+            return luggageService.getPackagesByStatus(status);
+        }
+    }
 
     @PostMapping("/order/LuggageStore/{id}")
     public Luggage addOrder(@PathVariable("id")Long id, @RequestBody Luggage luggage){
